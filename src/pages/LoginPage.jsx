@@ -181,8 +181,6 @@ const LoginPage = () => {
                     // register fields
                     <>
                       <TextField
-                        type="text"
-                        autoComplete={false}
                         label="First Name"
                         name="firstName"
                         onChange={handleChange}
