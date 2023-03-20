@@ -1,7 +1,66 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "state";
+import PostWidget from "./PostWidget";
 
-const PostsWidget = () => {
-  return <div>PostsWidget</div>;
+const PostsWidget = ({ userId, isProfile = false }) => {
+  const posts = useSelector((state) => state.posts);
+  const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
+
+  const getPosts = async () => {
+    let response = await axios.get(`${URL}/posts`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    let posts = response.data;
+    dispatch(setPosts({ posts }));
+  };
+  const getUserPosts = async () => {
+    let response = await axios.get(`${URL}/posts/${userId}/posts`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    let posts = response.data;
+    dispatch(setPosts({ posts }));
+  };
+  useEffect(() => {
+    if (isProfile) {
+      getUserPosts();
+    } else {
+      getPosts();
+    }
+  }, [userId, isProfile, token]);
+  return (
+    <>
+      {posts.map(
+        ({
+          _id,
+          userId,
+          firstName,
+          lastName,
+          description,
+          location,
+          picturePath,
+          userPicturePath,
+          likes,
+          comments,
+        }) => (
+          <PostWidget
+            key={_id}
+            postId={_id}
+            postUserId={userId}
+            name={`${firstName} ${lastName}`}
+            description={description}
+            location={location}
+            picturePath={picturePath}
+            userPicturePath={userPicturePath}
+            likes={likes}
+            comments={comments}
+          />
+        )
+      )}
+    </>
+  );
 };
 
 export default PostsWidget;

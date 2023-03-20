@@ -9,35 +9,36 @@ import axios from "axios";
 import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const UserWidget = ({ userId, picturePath }) => {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  let user = useSelector((state) => state.user);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
   // calling api to grab the user
-  const getUser = async () => {
-    let Url = `http://localhost:7000/users/${userId}`; //getting the user details with id
-    let response = await axios.get(Url, {
-      headers: { Authorization: `Bearer ${token}` }, //token verification
-    });
-    const data = response.data;
-    setUser(data);
-  };
-  useEffect(() => {
-    getUser();
-  }, []);
+  // const getUser = async () => {
+  //   let Url = `http://localhost:7000/users/${userId}`; //getting the user details with id
+  //   let response = await axios.get(Url, {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   });
 
-  if (!user) {
-    return null;
-  }
+  //   setUser(response.data);
+  // };
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+
+  // if (!user) {
+  //   return null;
+  // }
 
   const {
     firstName,
