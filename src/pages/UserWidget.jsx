@@ -5,7 +5,7 @@ import {
   WorkOutlineOutlined,
 } from "@mui/icons-material";
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import axios from "axios";
+
 import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -17,7 +17,7 @@ const UserWidget = ({ userId, picturePath }) => {
   // const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.token);
+
   let user = useSelector((state) => state.user);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;

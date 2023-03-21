@@ -10,19 +10,19 @@ import Navbar from "./Navbar";
 import PostsWidget from "./PostsWidget";
 import UserWidget from "./UserWidget";
 
-const ProfilePage = ({ picturePath }) => {
+const ProfilePage = () => {
   // const [user, setUser] = useState(null);
-  const { userId } = useParams();
-  // const token = useSelector((state) => state.token);
   const user = useSelector((state) => state.user);
+  const { userId } = useParams();
+  //const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   // const getUser = async () => {
-  //   const response = await axios.get(`${URL}/users/${userId}`, {
+  //   const response = await axios.get(`http://localhost:7000/users/${userId}`, {
   //     headers: { Authorization: `Bearer ${token}` },
   //   });
   //   const data = response.data;
-  //   setUser(data);
+  // setUser(data);
   // };
 
   // useEffect(() => {

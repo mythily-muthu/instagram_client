@@ -24,8 +24,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
   const patchFriend = async () => {
     const response = await axios.patch(
-      `4${URL}/users/${_id}/${friendId}`,
-      {},
+      `${URL}/users/${_id}/${friendId}`,
+
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -37,7 +37,7 @@ const PostWidget = ({
 
   const patchLike = async () => {
     const response = await axios.patch(
-      `${URL}/posts/${postId}/like`,
+      `http://localhost:7000/posts/${postId}/like`,
       { userId: loggedInUserId },
       {
         headers: {
