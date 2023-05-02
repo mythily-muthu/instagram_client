@@ -321,6 +321,45 @@ const LoginPage = () => {
                     ? "Dont have an account? Sign Up here."
                     : "Already have an account? Login here."}
                 </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "12px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      color: "red",
+                    }}
+                  >
+                    Test purpose use this credentials
+                  </Typography>
+                  <Typography
+                    sx={{
+                      marginTop: "12px",
+                      color: palette.primary.main,
+                      "&:hover": {
+                        color: palette.primary.dark,
+                      },
+                    }}
+                  >
+                    Email : mythu@gmail.com
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: palette.primary.main,
+                      "&:hover": {
+                        color: palette.primary.dark,
+                      },
+                    }}
+                  >
+                    Password: test123
+                  </Typography>
+                </Box>
               </form>
             );
           }}
