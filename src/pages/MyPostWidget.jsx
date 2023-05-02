@@ -21,6 +21,7 @@ import axios from "axios";
 import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
+import { URL } from "helper";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,21 +40,33 @@ const MyPostWidget = ({ picturePath }) => {
   const medium = palette.neutral.medium;
 
   const handlePost = async () => {
-    const response = axios.post(`${URL}/posts`, FormData, {
+    console.log("handle post");
+
+    const formData = new FormData(); // empty form data {}
+    formData.append("userId", _id);
+    formData.append("description", post);
+    if (image) {
+      formData.append("picture", image);
+      formData.append("picturePath", image.name);
+    }
+    // let Url = "http://localhost:7000/posts";
+    const response = await axios.post(`${URL}/posts`, formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const posts = response.data;
+    let posts = response.data;
+    posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");
   };
-
   return (
     <WidgetWrapper>
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />
         <InputBase
           placeholder="What's on your mind..."
+          onChange={(e) => setPost(e.target.value)}
+          value={post}
           sx={{
             width: "100%",
             backgroundColor: palette.neutral.light,
@@ -62,7 +75,6 @@ const MyPostWidget = ({ picturePath }) => {
           }}
         />
       </FlexBetween>
-
       {isImage && (
         <Box
           border={`1px solid ${medium}`}
@@ -71,7 +83,7 @@ const MyPostWidget = ({ picturePath }) => {
           p="1rem"
         >
           <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png"
+            acceptedFiles=".jpeg,.jpg,.png"
             multiple={false}
             onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
           >
@@ -82,12 +94,11 @@ const MyPostWidget = ({ picturePath }) => {
                   border={`2px dashed ${palette.primary.main}`}
                   p="1rem"
                   width="100%"
-                  sx={{ "&:hover": { cursor: "pointer" } }}
+                  sx={{ "& :hover": { cursor: "pointer" } }}
                 >
                   <input {...getInputProps()} />
-
                   {!image ? (
-                    <p>Add Image Here</p>
+                    <p>Add image Here</p>
                   ) : (
                     <FlexBetween>
                       <Typography>{image.name}</Typography>
@@ -95,7 +106,6 @@ const MyPostWidget = ({ picturePath }) => {
                     </FlexBetween>
                   )}
                 </Box>
-
                 {image && (
                   <IconButton
                     onClick={() => setImage(null)}
@@ -110,7 +120,7 @@ const MyPostWidget = ({ picturePath }) => {
         </Box>
       )}
       <Divider sx={{ margin: "1.25rem 0" }} />
-
+      {/* icons */}
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
           <ImageOutlined sx={{ color: mediumMain }} />
@@ -154,7 +164,7 @@ const MyPostWidget = ({ picturePath }) => {
             borderRadius: "3rem",
           }}
         >
-          POST
+          Post
         </Button>
       </FlexBetween>
     </WidgetWrapper>

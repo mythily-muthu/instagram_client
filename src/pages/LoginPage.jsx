@@ -81,7 +81,7 @@ const LoginPage = () => {
       dispatch(setLogin(response.data));
       navigate("/home");
     }
-    resetForm();
+    // resetForm();
     console.log("res:", response);
   };
   const handleRegister = async (values, resetForm) => {

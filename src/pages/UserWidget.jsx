@@ -36,9 +36,9 @@ const UserWidget = ({ userId, picturePath }) => {
   //   getUser();
   // }, []);
 
-  // if (!user) {
-  //   return null;
-  // }
+  if (!user) {
+    return null;
+  }
 
   const {
     firstName,
@@ -49,7 +49,7 @@ const UserWidget = ({ userId, picturePath }) => {
     impressions,
     friends,
   } = user;
-  console.log("user:", user);
+
   return (
     <WidgetWrapper>
       {/* FIRST ROW */}

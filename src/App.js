@@ -4,7 +4,6 @@ import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { createTheme } from "@mui/system";
 import { themeSettings } from "./theme";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useMemo } from "react";

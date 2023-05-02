@@ -1,4 +1,5 @@
 import axios from "axios";
+import { URL } from "helper";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
@@ -11,7 +12,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   // ALL USERS POSTS
   const getPosts = async () => {
-    const response = await axios.get("http://localhost:7000/posts", {
+    const response = await axios.get(`${URL}/posts`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const posts = response.data;
@@ -20,17 +21,15 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   };
 
   const getUserPosts = async () => {
-    const response = await axios.get(
-      `http://localhost:7000/posts/${userId}/posts`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const response = await axios.get(`${URL}/posts/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     let posts = response.data;
 
     dispatch(setPosts({ posts }));
   };
 
+  console.log("posts", posts);
   useEffect(() => {
     if (isProfile) {
       getUserPosts();
@@ -40,33 +39,20 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   }, [userId, isProfile, token]);
   return (
     <>
-      {/* {posts.map(
-        ({
-          _id,
-          userId,
-          firstName,
-          lastName,
-          description,
-          location,
-          picturePath,
-          userPicturePath,
-          likes,
-          comments,
-        }) => (
-          <PostWidget
-            key={_id}
-            postId={_id}
-            postuserId={userId}
-            name={`${firstName} ${lastName}`}
-            description={description}
-            location={location}
-            picturePath={picturePath}
-            userPicturePath={userPicturePath}
-            likes={likes}
-            comments={comments}
-          />
-        )
-      )} */}
+      {posts.map((post) => (
+        <PostWidget
+          key={post._id}
+          postId={post._id}
+          postUserId={post.userId}
+          name={`${post.firstName} ${post.lastName}`}
+          description={post.description}
+          location={post.location}
+          picturePath={post.picturePath}
+          userPicturePath={post.userPicturePath}
+          likes={post.likes}
+          comments={post.comments}
+        />
+      ))}
     </>
   );
 };

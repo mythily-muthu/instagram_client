@@ -1,5 +1,6 @@
 import {
   ChatBubbleOutlineOutlined,
+  DeleteOutline,
   FavoriteBorderOutlined,
   FavoriteOutlined,
   ShareOutlined,
@@ -9,6 +10,7 @@ import axios from "axios";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
+import { URL } from "helper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
@@ -30,14 +32,13 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
-
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
   const patchLike = async () => {
     const response = await axios.patch(
-      `http://localhost:7000/posts/${postId}/like`,
+      `${URL}/posts/${postId}/like`,
       { userId: loggedInUserId },
       {
         headers: {
@@ -48,6 +49,15 @@ const PostWidget = ({
     );
     const updatedPost = response.data;
     dispatch(setPost({ post: updatedPost }));
+  };
+
+  const handleDelete = async (post_id) => {
+    console.log("post_id", post_id);
+    let res = await axios.delete(`${URL}/posts/${post_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   return (
@@ -90,10 +100,22 @@ const PostWidget = ({
             <Typography>{comments.length}</Typography>
           </FlexBetween>
         </FlexBetween>
-
-        <IconButton>
-          <ShareOutlined />
-        </IconButton>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          {postUserId === loggedInUserId && (
+            <IconButton onClick={() => handleDelete(postId)}>
+              <DeleteOutline />
+            </IconButton>
+          )}
+          <IconButton>
+            <ShareOutlined />
+          </IconButton>
+        </Box>
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
