@@ -29,13 +29,13 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     dispatch(setPosts({ posts }));
   };
 
-  console.log("posts", posts);
   useEffect(() => {
     if (isProfile) {
       getUserPosts();
     } else {
       getPosts();
     }
+    // eslint-disable-next-line
   }, [userId, isProfile, token]);
   return (
     <>

@@ -53,7 +53,7 @@ const PostWidget = ({
 
   const handleDelete = async (post_id) => {
     console.log("post_id", post_id);
-    let res = await axios.delete(`${URL}/posts/${post_id}`, {
+    await axios.delete(`${URL}/posts/${post_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
