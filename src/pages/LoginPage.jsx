@@ -74,18 +74,15 @@ const LoginPage = () => {
   });
 
   const handleLogin = async (values, resetForm) => {
-    console.log("values", values);
-
     const response = await axios.post(`${URL}/auth/login`, values);
     if (response.status === 200) {
       dispatch(setLogin(response.data));
       navigate("/home");
     }
     // resetForm();
-    console.log("res:", response);
   };
   const handleRegister = async (values, resetForm) => {
-    const response = await axios.post(`${URL}/auth/register`, values);
+    await axios.post(`${URL}/auth/register`, values);
     console.log("values:", values);
   };
 
